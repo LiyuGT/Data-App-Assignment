@@ -3,9 +3,15 @@ import pandas as pd
 
 st.title("Data App Assignment")
 
-st.write("### Input Data and Examples")
+st.write("### Input Data")
 df = pd.read_csv("Superstore_Sales_utf8.csv", parse_dates=True)
 st.dataframe(df)
+
+
+# Aggregating by time
+# Here we ensure Order_Date is in datetime format, then set is as an index to our dataframe
+df["Order_Date"] = pd.to_datetime(df["Order_Date"])
+df.set_index('Order_Date', inplace=True)
 
 st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
