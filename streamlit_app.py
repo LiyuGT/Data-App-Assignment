@@ -36,5 +36,10 @@ st.write("### (2) add a multi-select for Sub_Category *in the selected Category 
 sub_categories = st.multiselect("Select Sub-Category", df[df['Category'] == category]['Sub_Category'].unique())
 
 st.write("### (3) show a line chart of sales for the selected items in (2)")
+filtered_df = filter_data(category, sub_categories)
+if not filtered_df.empty:
+    st.line_chart(filtered_df.groupby(pd.Grouper(key='Order_Date', freq='M')).sum()['Sales'])
+
+
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
