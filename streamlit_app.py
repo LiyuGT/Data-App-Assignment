@@ -62,3 +62,7 @@ if not filtered_df.empty:
 
 
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
+if not filtered_df.empty:
+    overall_avg_profit_margin = (df['Profit'].sum() / df['Sales'].sum()) * 100
+    delta_margin = overall_profit_margin - overall_avg_profit_margin
+    st.metric(label="Overall Profit Margin vs Average", value=f"{delta_margin:.2f}%", delta=delta_margin)
