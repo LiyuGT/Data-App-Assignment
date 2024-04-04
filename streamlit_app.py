@@ -38,12 +38,11 @@ sub_categories = st.multiselect("Select Sub-Category", df[df['Category'] == cate
 st.write("### (3) show a line chart of sales for the selected items in (2)")
 def filter_data(category, sub_categories):
     filtered_df = df[(df['Category'] == category) & (df['Sub_Category'].isin(sub_categories))]
+    st.dataframe(filtered_df)  # Print the filtered DataFrame
     return filtered_df
 
 filtered_df = filter_data(category, sub_categories)
-if not filtered_df.empty:
-    st.line_chart(filtered_df.groupby(pd.Grouper(key='Order_Date', freq='M')).sum()['Sales'])
-
+st.dataframe(filtered_df)  
 
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
