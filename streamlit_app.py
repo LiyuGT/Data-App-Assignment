@@ -38,7 +38,6 @@ sub_categories = st.multiselect("Select Sub-Category", df[df['Category'] == cate
 st.write("### (3) show a line chart of sales for the selected items in (2)")
 def filter_data(category, sub_categories):
     filtered_df = df[(df['Category'] == category) & (df['Sub_Category'].isin(sub_categories))]
-    st.dataframe(filtered_df)  # Print the filtered DataFrame
     return filtered_df
 
 filtered_df = filter_data(category, sub_categories)
@@ -51,4 +50,15 @@ st.dataframe(sales_by_month2)
 st.line_chart(sales_by_month2, y="Sales")
 
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
+if not filtered_df.empty:
+    total_sales = filtered_df['Sales'].sum()
+    total_profit = filtered_df['Profit'].sum()
+    overall_profit_margin = (total_profit / total_sales) * 100
+
+    st.metric(label="Total Sales", value=f"${total_sales:.2f}")
+    st.metric(label="Total Profit", value=f"${total_profit:.2f}")
+    st.metric(label="Overall Profit Margin (%)", value=f"{overall_profit_margin:.2f}%")
+
+
+
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
