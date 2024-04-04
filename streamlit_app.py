@@ -1,7 +1,10 @@
 import streamlit as st
-st.write("Hello World")
-st.write("Welcome to Liyu's world")
+import pandas as pd
+import matplotlib.pyplot as plt
+import math
 
-x = st.text_input("What's your name?")
-is_clicked = st.button("Send")
-st.write(f"Oh, Hi {x}!")
+st.title("Data App Assignment")
+
+st.write("### Input Data and Examples")
+df = pd.read_csv("Superstore_Sales_utf8.csv", parse_dates=True)
+st.dataframe(df)
