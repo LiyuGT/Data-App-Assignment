@@ -44,13 +44,11 @@ def filter_data(category, sub_categories):
 filtered_df = filter_data(category, sub_categories)
 st.dataframe(filtered_df)  
 
-# Aggregating by time
-# Here we ensure Order_Date is in datetime format, then set is as an index to our dataframe
-filtered_df["Order_Date"] = pd.to_datetime(filtered_df["Order_Date"])
-filtered_df.set_index('Order_Date', inplace=True)
 # Here the Grouper is using our newly set index to group by Month ('M')
-sales_by_month = filtered_df.filter(items=['Sales']).groupby(pd.Grouper(freq='M')).sum()
-st.dataframe(sales_by_month)
+sales_by_month2 = filtered_df.filter(items=['Sales']).groupby(pd.Grouper(freq='M')).sum()
+st.dataframe(sales_by_month2)
+# Here the grouped months are the index and automatically used for the x axis
+st.line_chart(sales_by_month2, y="Sales")
 
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
