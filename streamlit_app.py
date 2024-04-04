@@ -36,6 +36,12 @@ st.write("### (2) add a multi-select for Sub_Category *in the selected Category 
 sub_categories = st.multiselect("Select Sub-Category", df[df['Category'] == category]['Sub_Category'].unique())
 
 st.write("### (3) show a line chart of sales for the selected items in (2)")
+def filter_data(category, sub_categories):
+    filtered_df = df[df['Category'] == category]
+    if sub_categories:
+        filtered_df = filtered_df[filtered_df['Sub_Category'].isin(sub_categories)]
+    return filtered_df
+    
 filtered_df = filter_data(category, sub_categories)
 if not filtered_df.empty:
     st.line_chart(filtered_df.groupby(pd.Grouper(key='Order_Date', freq='M')).sum()['Sales'])
